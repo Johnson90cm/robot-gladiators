@@ -30,9 +30,30 @@ var fightOrSkip = function() {
 
 // fight function (now with parameter for enemy's name)
 var fight = function(enemy) {
+  
+  var isPlayerTurn = true;
+    if (Math.random() > .5) {
+      isPlayerTurn = false;
+    }
+
   while (playerInfo.health > 0 && enemy.health > 0) {
     
-    if (fightOrSkip()) {
+    // if it is the player-robot's turn:
+    // Prompt the fight or skip request
+    // Remove damage from the enemy-robot's health
+    // Check of the enemy-robot has enough health to continue fighting
+
+    // if it is not the player-robot's turn:
+    // Remove damage from the player robot's health
+    // Check if the player-robot had enough health to contue fighting
+
+    // After the turn is done, switch turns for the next bout of fighting:
+    // If the player-robot went first, run the logic for the enemy-robot
+    // attaching the player robot
+
+    if (isPlayerTurn) {
+
+      if (fightOrSkip()) {
       break;
     }
     // generate random damage value based on player's attack power
@@ -56,7 +77,7 @@ var fight = function(enemy) {
     } else {
       window.alert(enemy.name + ' still has ' + enemy.health + ' health left.');
     }
-
+  } else {
     // remove players's health by subtracting the amount set in the enemy.attack variable
     var damage = randomNumber (enemy.attack - 3, enemy.attack);
 
@@ -66,16 +87,18 @@ var fight = function(enemy) {
       enemy.name + ' attacked ' + playerInfo.name + '. ' + playerInfo.name + ' now has ' + playerInfo.health + ' health remaining.'
     );
 
-    // check player's health
-    if (playerInfo.health <= 0) {
-      window.alert(playerInfo.name + ' has died!');
-      // leave while() loop if player is dead
-      break;
-    } else {
-      window.alert(playerInfo.name + ' still has ' + playerInfo.health + ' health left.');
+      // check player's health
+      if (playerInfo.health <= 0) {
+        window.alert(playerInfo.name + ' has died!');
+        // leave while() loop if player is dead
+        break;
+      } else {
+        window.alert(playerInfo.name + ' still has ' + playerInfo.health + ' health left.');
+      }
     }
+    isPlayerTurn = !isPlayerTurn;
   }
-};
+}
 
 // fight each enemy-robot by looping over them and fighting them one at a time
 var startGame = function() {
